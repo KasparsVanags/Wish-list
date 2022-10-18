@@ -46,9 +46,9 @@ public class WishListApiController : ControllerBase
         return Ok(wish);
     }
 
-    [Route("removeWish/{id}")]
+    [Route("deleteWish/{id}")]
     [HttpDelete]
-    public IActionResult RemoveWish(int id)
+    public IActionResult DeleteWish(int id)
     {
         var wish = _entityService.GetById(id);
 
