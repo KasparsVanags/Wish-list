@@ -1,7 +1,7 @@
 # Wish-list
 
 .NET 6 REST API for wishlist management.
-Created with Entity Framework, uses MS SQL
+Created with Entity Framework, uses MS SQL.
 
 ## API Reference
 
