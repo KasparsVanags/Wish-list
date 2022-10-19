@@ -114,3 +114,45 @@ Response body
   }
 ]
 ```
+
+---
+
+### Get usernames from user array
+Returns a comma separated string of usernames
+
+```
+  POST /api/users/getNames
+```
+
+Request body
+```json
+{
+  "users": 
+  [
+    {
+      "type": "user",
+      "id": 150709,
+      "name": "johnsmith",
+      "email": "jsmith@example.com"
+    },
+    {
+      "type": "user",
+      "id": 150710,
+      "name": "angelinasmith",
+      "email": "asmith@example.com"
+    },
+    {
+      "type": "user",
+      "id": 150910,
+      "name": "adamivanov",
+      "email": "aivanov@another.org"
+    }
+  ]
+}
+```
+
+Response body
+
+```
+johnsmith,angelinasmith,adamivanov
+```

@@ -17,7 +17,7 @@ public class UserApiControllerTests
     public void GetNames_ValidListOfUsers_ReturnsNames()
     {
         //Arrange
-        var users = new List<User>
+        var userList = new List<User>()
         {
             new()
             {
@@ -51,8 +51,13 @@ public class UserApiControllerTests
             }
         };
 
+        var userListRequest = new UserListRequest()
+        {
+            Users = userList
+        };
+
         //Act
-        var response = _controller.GetNames(users) as OkObjectResult;
+        var response = _controller.GetNames(userListRequest) as OkObjectResult;
 
         //Assert
         response.Should().NotBeNull();
@@ -64,10 +69,13 @@ public class UserApiControllerTests
     public void GetNames_EmptyList_ReturnsBadRequest()
     {
         //Arrange
-        var users = new List<User>();
+        var userListRequest = new UserListRequest()
+        {
+            Users = new List<User>()
+        };
 
         //Act
-        var response = _controller.GetNames(users) as BadRequestObjectResult;
+        var response = _controller.GetNames(userListRequest) as BadRequestObjectResult;
 
         //Assert
         response.Should().NotBeNull();

@@ -10,10 +10,10 @@ public class UserApiController : ControllerBase
 {
     [Route("getNames")]
     [HttpPost]
-    public IActionResult GetNames(List<User> users)
+    public IActionResult GetNames(UserListRequest userList)
     {
-        if (users.Count == 0) return BadRequest("User list can not be empty");
+        if (userList.Users.Count == 0) return BadRequest("User list can not be empty");
 
-        return Ok(users.GetNames());
+        return Ok(userList.Users.GetNames());
     }
 }
