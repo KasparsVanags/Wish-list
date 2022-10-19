@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Wish_list.Core.Interfaces;
 using Wish_list.Core.Models;
 using Wish_list.Core.Services;
 using Wish_list.Data;

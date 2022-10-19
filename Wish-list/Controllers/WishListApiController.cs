@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Wish_list.Core.Interfaces;
+using Wish_list.Core.Models;
 using Wish_list.Core.Services;
 
 namespace Wish_list.Controllers;
@@ -8,10 +9,10 @@ namespace Wish_list.Controllers;
 [ApiController]
 public class WishListApiController : ControllerBase
 {
-    private readonly IEntityService<IWish> _entityService;
+    private readonly IEntityService<Wish> _entityService;
     private readonly IWishValidator _wishValidator;
 
-    public WishListApiController(IEntityService<IWish> entityService, IWishValidator wishValidator)
+    public WishListApiController(IEntityService<Wish> entityService, IWishValidator wishValidator)
     {
         _entityService = entityService;
         _wishValidator = wishValidator;
@@ -19,7 +20,7 @@ public class WishListApiController : ControllerBase
 
     [Route("create")]
     [HttpPost]
-    public IActionResult CreateWish(IWish wish)
+    public IActionResult CreateWish(Wish wish)
     {
         if (!_wishValidator.IsValid(wish)) return BadRequest();
 
@@ -30,7 +31,7 @@ public class WishListApiController : ControllerBase
 
     [Route("update/{id}")]
     [HttpPut]
-    public IActionResult UpdateWish(int id, IWish updatedWish)
+    public IActionResult UpdateWish(int id, Wish updatedWish)
     {
         if (!_wishValidator.IsValid(updatedWish)) return BadRequest();
 

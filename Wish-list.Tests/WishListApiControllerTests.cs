@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Wish_list.Controllers;
 using Wish_list.Core.Interfaces;
+using Wish_list.Core.Models;
 using Wish_list.Core.Services;
 
 namespace Wish_list.Tests;
@@ -9,15 +10,15 @@ namespace Wish_list.Tests;
 public class WishListApiControllerTests
 {
     private readonly WishListApiController _controller;
-    private readonly Mock<IEntityService<IWish>> _entityServiceMock;
-    private readonly Mock<IWish> _wishMock;
+    private readonly Mock<IEntityService<Wish>> _entityServiceMock;
+    private readonly Mock<Wish> _wishMock;
     private readonly Mock<IWishValidator> _wishValidatorMock;
 
     public WishListApiControllerTests()
     {
         _wishValidatorMock = new Mock<IWishValidator>();
-        _wishMock = new Mock<IWish>();
-        _entityServiceMock = new Mock<IEntityService<IWish>>();
+        _wishMock = new Mock<Wish>();
+        _entityServiceMock = new Mock<IEntityService<Wish>>();
         _controller = new WishListApiController(_entityServiceMock.Object, _wishValidatorMock.Object);
     }
 
@@ -71,32 +72,6 @@ public class WishListApiControllerTests
     }
 
     [Fact]
-    public void UpdateWish_ValidWish_WishPropertiesAreChangedBeforeUpdate()
-    {
-        //Arrange
-        _entityServiceMock.Setup(x => x.GetById(1)).Returns(_wishMock.Object);
-        _entityServiceMock.Setup(x => x.Update(_wishMock.Object));
-        var updatedWish = new Mock<IWish>();
-        _wishValidatorMock.Setup(x => x.IsValid(updatedWish.Object)).Returns(true);
-
-        _wishMock.SetupProperty(x => x.Name);
-        _wishMock.SetupProperty(x => x.Url);
-        _wishMock.SetupProperty(x => x.Notes);
-
-        updatedWish.SetupGet(x => x.Name).Returns("car");
-        updatedWish.SetupGet(x => x.Url).Returns("www.cars.com/car");
-        updatedWish.SetupGet(x => x.Notes).Returns("my dream car");
-
-        //Act
-        _controller.UpdateWish(1, updatedWish.Object);
-
-        //Assert
-        _wishMock.Object.Name.Should().Be("car");
-        _wishMock.Object.Url.Should().Be("www.cars.com/car");
-        _wishMock.Object.Notes.Should().Be("my dream car");
-    }
-
-    [Fact]
     public void UpdateWish_InValidWish_ReturnsBadRequest()
     {
         //Arrange
@@ -118,7 +93,7 @@ public class WishListApiControllerTests
     {
         //Arrange
         _wishValidatorMock.Setup(x => x.IsValid(_wishMock.Object)).Returns(true);
-        _entityServiceMock.Setup(x => x.GetById(1)).Returns((IWish?)null);
+        _entityServiceMock.Setup(x => x.GetById(1)).Returns((Wish?)null);
         _entityServiceMock.Setup(x => x.Update(_wishMock.Object));
 
         //Act
@@ -151,7 +126,7 @@ public class WishListApiControllerTests
     public void DeleteWish_WishDoesntExist_ReturnsNotFound()
     {
         //Arrange
-        _entityServiceMock.Setup(x => x.GetById(1)).Returns((IWish?)null);
+        _entityServiceMock.Setup(x => x.GetById(1)).Returns((Wish?)null);
         _entityServiceMock.Setup(x => x.Delete(_wishMock.Object));
 
         //Act
@@ -167,9 +142,6 @@ public class WishListApiControllerTests
     public void GetWish_WishExists_ReturnsWish()
     {
         //Arrange
-        _wishMock.SetupGet(x => x.Name).Returns("car");
-        _wishMock.SetupGet(x => x.Url).Returns("www.cars.com/car");
-        _wishMock.SetupGet(x => x.Notes).Returns("my dream car");
         _entityServiceMock.Setup(x => x.GetById(1)).Returns(_wishMock.Object);
 
         //Act
@@ -179,18 +151,16 @@ public class WishListApiControllerTests
         _entityServiceMock.Verify(x => x.GetById(1), Times.Once());
         response.Should().NotBeNull();
         response.StatusCode.Should().Be(200);
-        var wish = response.Value as IWish;
+        var wish = response.Value as Wish;
         wish.Should().NotBeNull();
-        wish.Name.Should().Be("car");
-        wish.Url.Should().Be("www.cars.com/car");
-        wish.Notes.Should().Be("my dream car");
+      
     }
 
     [Fact]
     public void GetWish_WishDoesntExist_ReturnsNotFoundResult()
     {
         //Arrange
-        _entityServiceMock.Setup(x => x.GetById(1)).Returns((IWish?)null);
+        _entityServiceMock.Setup(x => x.GetById(1)).Returns((Wish?)null);
 
         //Act
         var response = _controller.GetWish(1) as NotFoundResult;
@@ -205,7 +175,7 @@ public class WishListApiControllerTests
     public void GetAll_WishListNotEmpty_ReturnsWishList()
     {
         //Arrange
-        var wishList = new List<IWish>
+        var wishList = new List<Wish>
         {
             _wishMock.Object
         };
@@ -225,7 +195,7 @@ public class WishListApiControllerTests
     public void GetAll_WishListEmpty_ReturnsNoContent()
     {
         //Arrange
-        var wishList = new List<IWish>();
+        var wishList = new List<Wish>();
         _entityServiceMock.Setup(x => x.GetAll()).Returns(wishList);
 
         //Act
