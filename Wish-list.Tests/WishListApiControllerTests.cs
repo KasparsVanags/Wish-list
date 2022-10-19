@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Wish_list.Controllers;
 using Wish_list.Core.Interfaces;
 using Wish_list.Core.Models;
@@ -153,7 +152,6 @@ public class WishListApiControllerTests
         response.StatusCode.Should().Be(200);
         var wish = response.Value as Wish;
         wish.Should().NotBeNull();
-      
     }
 
     [Fact]

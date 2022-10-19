@@ -6,9 +6,12 @@ namespace Wish_list.Core.Models;
 
 public class Wish : Entity, IWish
 {
-    [MaxLength(MaxWishNameLength)] public string Name { get; set; }
+    [MaxLength(MaxWishNameLength)]
+    public string Name { get; set; }
 
-    [MaxLength(MaxUrlLength)] public string? Url { get; set; }
+    [MaxLength(MaxUrlLength)]
+    public string? Url { get; set; }
 
-    [MaxLength(MaxNotesLength)] public string? Notes { get; set; }
+    [MaxLength(MaxNotesLength)]
+    public string? Notes { get; set; }
 }

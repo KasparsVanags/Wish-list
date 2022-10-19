@@ -17,7 +17,7 @@ public class UserApiControllerTests
     public void GetNames_ValidListOfUsers_ReturnsNames()
     {
         //Arrange
-        var userList = new List<User>()
+        var userList = new List<User>
         {
             new()
             {
@@ -51,7 +51,7 @@ public class UserApiControllerTests
             }
         };
 
-        var userListRequest = new UserListRequest()
+        var userListRequest = new UserListRequest
         {
             Users = userList
         };
@@ -69,7 +69,7 @@ public class UserApiControllerTests
     public void GetNames_EmptyList_ReturnsBadRequest()
     {
         //Arrange
-        var userListRequest = new UserListRequest()
+        var userListRequest = new UserListRequest
         {
             Users = new List<User>()
         };
