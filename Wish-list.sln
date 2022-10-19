@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wish-list.Tests", "Wish-lis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wish-list.Core.Tests", "Wish-list.Core.Tests\Wish-list.Core.Tests.csproj", "{2B9BF903-5296-4A0C-B3A7-E077D9198A88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wish-list.Services.Tests", "Wish-list.Services.Tests\Wish-list.Services.Tests.csproj", "{88FE2D8A-158F-4E10-B839-18DDA88328F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{2B9BF903-5296-4A0C-B3A7-E077D9198A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B9BF903-5296-4A0C-B3A7-E077D9198A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B9BF903-5296-4A0C-B3A7-E077D9198A88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88FE2D8A-158F-4E10-B839-18DDA88328F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88FE2D8A-158F-4E10-B839-18DDA88328F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88FE2D8A-158F-4E10-B839-18DDA88328F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88FE2D8A-158F-4E10-B839-18DDA88328F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

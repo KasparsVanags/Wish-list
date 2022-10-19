@@ -10,9 +10,4 @@ public class WishListDbContext : DbContext, IWishListDbContext
     }
 
     public DbSet<Wish> Wishes { get; set; }
-
-    public Task<int> SaveChangesAsync()
-    {
-        return base.SaveChangesAsync();
-    }
 }

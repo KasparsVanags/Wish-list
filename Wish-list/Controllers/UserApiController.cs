@@ -4,7 +4,7 @@ using Wish_list.Models;
 
 namespace Wish_list.Controllers;
 
-[Route("api/user")]
+[Route("api/users")]
 [ApiController]
 public class UserApiController : ControllerBase
 {
@@ -12,6 +12,8 @@ public class UserApiController : ControllerBase
     [HttpPost]
     public IActionResult GetNames(List<User> users)
     {
+        if (users.Count == 0) return BadRequest("User list can not be empty");
+
         return Ok(users.GetNames());
     }
 }

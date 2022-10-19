@@ -1,26 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Wish_list.Core.Interfaces;
-using Wish_list.Core.Models;
 using Wish_list.Core.Services;
 
 namespace Wish_list.Controllers;
 
-[Route("api/wishList")]
+[Route("api/wishList/wish")]
 [ApiController]
 public class WishListApiController : ControllerBase
 {
-    private readonly IEntityService<Wish> _entityService;
+    private readonly IEntityService<IWish> _entityService;
     private readonly IWishValidator _wishValidator;
 
-    public WishListApiController(IEntityService<Wish> entityService, IWishValidator wishValidator)
+    public WishListApiController(IEntityService<IWish> entityService, IWishValidator wishValidator)
     {
         _entityService = entityService;
         _wishValidator = wishValidator;
     }
 
-    [Route("addWish")]
+    [Route("create")]
     [HttpPost]
-    public IActionResult AddWish(Wish wish)
+    public IActionResult CreateWish(IWish wish)
     {
         if (!_wishValidator.IsValid(wish)) return BadRequest();
 
@@ -29,9 +28,9 @@ public class WishListApiController : ControllerBase
         return Created("", wish);
     }
 
-    [Route("updateWish/{id}")]
+    [Route("update/{id}")]
     [HttpPut]
-    public IActionResult UpdateWish(int id, Wish updatedWish)
+    public IActionResult UpdateWish(int id, IWish updatedWish)
     {
         if (!_wishValidator.IsValid(updatedWish)) return BadRequest();
 
@@ -41,23 +40,26 @@ public class WishListApiController : ControllerBase
 
         wish.Name = updatedWish.Name;
         wish.Url = updatedWish.Url;
+        wish.Notes = updatedWish.Notes;
         _entityService.Update(wish);
 
         return Ok(wish);
     }
 
-    [Route("deleteWish/{id}")]
+    [Route("delete/{id}")]
     [HttpDelete]
     public IActionResult DeleteWish(int id)
     {
         var wish = _entityService.GetById(id);
 
-        if (wish != null) _entityService.Delete(wish);
+        if (wish == null) return NotFound();
 
-        return Ok();
+        _entityService.Delete(wish);
+
+        return NoContent();
     }
 
-    [Route("getWishById/{id}")]
+    [Route("get/{id}")]
     [HttpGet]
     public IActionResult GetWish(int id)
     {
@@ -70,8 +72,12 @@ public class WishListApiController : ControllerBase
 
     [Route("getAll")]
     [HttpGet]
-    public IActionResult GetWishList()
+    public IActionResult GetAllWishes()
     {
-        return Ok(_entityService.GetAll());
+        var wishList = _entityService.GetAll();
+
+        if (wishList.Count == 0) return NoContent();
+
+        return Ok(wishList);
     }
 }

@@ -17,28 +17,30 @@ public class WishNameValidatorTests
     [Fact]
     public void IsValid_ValidName_ReturnsTrue()
     {
-        //arrange
+        //Arrange
         _wishMock.SetupGet(x => x.Name).Returns("car");
-        //assert
+
+        //Assert
         _wishNameValidator.IsValid(_wishMock.Object).Should().BeTrue();
     }
 
     [Fact]
     public void IsValid_EmptyName_ReturnsFalse()
     {
-        //arrange
+        //Arrange
         _wishMock.SetupGet(x => x.Name).Returns("");
-        //assert
+
+        //Assert
         _wishNameValidator.IsValid(_wishMock.Object).Should().BeFalse();
     }
 
     [Fact]
     public void IsValid_NullName_ReturnsFalse()
     {
-        //arrange
-        string? nullString = null;
-        _wishMock.SetupGet(x => x.Name).Returns(nullString);
-        //assert
+        //Arrange
+        _wishMock.SetupGet(x => x.Name).Returns((string?)null);
+
+        //Assert
         _wishNameValidator.IsValid(_wishMock.Object).Should().BeFalse();
     }
 }

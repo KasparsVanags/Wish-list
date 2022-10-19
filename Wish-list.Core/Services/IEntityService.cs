@@ -1,8 +1,8 @@
-using Wish_list.Core.Models;
+using Wish_list.Core.Interfaces;
 
 namespace Wish_list.Core.Services;
 
-public interface IEntityService<T> where T : Entity
+public interface IEntityService<T> where T : IEntity
 {
     void Create(T entity);
     void Delete(T entity);
